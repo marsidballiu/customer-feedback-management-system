@@ -1,0 +1,22 @@
+.feedback-summary {
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.summary-box {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.feedback-list {
+  margin-top: 10px;
+}
+
+.feedback-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
