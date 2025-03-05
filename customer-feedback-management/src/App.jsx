@@ -4,15 +4,15 @@ import FeedbackSummary from "./components/FeedbackSummary";
 import "./App.css";
 
 function App() {
-  // Simulated logged-in user (this would be replaced with authentication logic)
+  // Log in example
   const [user, setUser] = useState({
     userId: 1,
-    name: "John Doe",
+    name: "John Smith",
     email: "john@example.com",
     role: "customer",
   });
 
-  // Sample services/products list (would be fetched from a database in real implementation)
+  // Sample services
   const [services, setServices] = useState([
     { serviceId: 101, serviceName: "Web Hosting", category: "Service" },
     { serviceId: 102, serviceName: "Laptop", category: "Product" },
@@ -26,9 +26,16 @@ function App() {
 
   // Function to handle feedback submission
   const handleFeedbackSubmit = (feedback) => {
-    setFeedbackList([feedback, ...feedbackList]);
+    const newFeedback = {
+      ...feedback,
+      userId: feedback.userId, 
+      name: feedback.name,
+      email: feedback.email,
+    };
+    
+    setFeedbackList([newFeedback, ...feedbackList]);
   };
-
+  
   return (
     <div className="container">
       <h1>Customer Feedback System</h1>

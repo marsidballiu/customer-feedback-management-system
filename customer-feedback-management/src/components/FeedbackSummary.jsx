@@ -1,16 +1,21 @@
-import "./FeedbackSummary.css";
+import { useMemo } from "react";
 
 function FeedbackSummary({ feedbackList, services }) {
   const totalFeedback = feedbackList.length;
 
-  // Calculate average rating per service
-  const serviceRatings = {};
-  services.forEach((service) => {
-    const serviceFeedback = feedbackList.filter((fb) => fb.serviceId === service.serviceId);
-    const avgRating =
-      serviceFeedback.length > 0 ? (serviceFeedback.reduce((acc, fb) => acc + fb.rating, 0) / serviceFeedback.length).toFixed(1) : "N/A";
-    serviceRatings[service.serviceId] = avgRating;
-  });
+  // Calculate average rating per service dynamically
+  const serviceRatings = useMemo(() => {
+    const ratings = {};
+    services.forEach((service) => {
+      const serviceFeedback = feedbackList.filter((fb) => fb.serviceId === service.serviceId);
+      const avgRating =
+        serviceFeedback.length > 0
+          ? (serviceFeedback.reduce((acc, fb) => acc + fb.rating, 0) / serviceFeedback.length).toFixed(1)
+          : "N/A";
+      ratings[service.serviceId] = avgRating;
+    });
+    return ratings;
+  }, [feedbackList, services]);
 
   return (
     <div className="feedback-summary">
@@ -36,10 +41,10 @@ function FeedbackSummary({ feedbackList, services }) {
           feedbackList.map((fb, index) => (
             <div key={index} className="feedback-item">
               <p>
-                <strong>User {fb.userId}</strong> - Service {fb.serviceId}
+                <strong>{fb.name || `User ${fb.userId}`}</strong> - {services.find(s => s.serviceId === fb.serviceId)?.serviceName || 'Unknown Service'}
               </p>
               <p>⭐ {fb.rating} stars</p>
-              <p>📅 {new Date(fb.submittedAt).toLocaleString()}</p>
+              <p>📅 {fb.submittedAt ? new Date(fb.submittedAt).toLocaleString() : "Unknown Date"}</p>
               <p>💬 {fb.comments}</p>
             </div>
           ))

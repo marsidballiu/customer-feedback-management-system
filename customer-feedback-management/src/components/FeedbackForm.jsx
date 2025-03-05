@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./FeedbackForm.css";
 
 function FeedbackForm({ user, services, onSubmitFeedback }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(user.name || ""); // Default to user name if available
+  const [email, setEmail] = useState(user.email || ""); 
   const [rating, setRating] = useState(0);
   const [selectedService, setSelectedService] = useState("");
   const [comments, setComments] = useState("");
@@ -21,13 +21,14 @@ function FeedbackForm({ user, services, onSubmitFeedback }) {
       email,
       rating,
       serviceId: selectedService,
-      userId: user.userId, // Assuming user is passed as a prop with userId
+      userId: user.userId, 
       submittedAt: new Date().toISOString(),
       comments,
     };
 
     onSubmitFeedback(newFeedback);
 
+    // Reset form fields after submission
     setName("");
     setEmail("");
     setRating(0);
@@ -65,7 +66,7 @@ function FeedbackForm({ user, services, onSubmitFeedback }) {
       <label>Service/Product:</label>
       <select
         value={selectedService}
-        onChange={(e) => setSelectedService(e.target.value)}
+        onChange={(e) => setSelectedService(parseInt(e.target.value))}
         required
       >
         <option value="">Select a service</option>
